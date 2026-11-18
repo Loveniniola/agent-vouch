@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AgentVouch — an on-chain trust graph for Agent IDs</title>
+  <meta name="description" content="Agent ID holders vouch for other Agent ID holders on BNB Chain. One vouch per pair, stored on chain." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src https://bsc-dataseed.bnbchain.org https://bsc-dataseed1.binance.org https://bsc-rpc.publicnode.com; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>AgentVouch <span>· trust graph for Agent IDs · BNB Chain</span></h1>
+    <div class="row fixed">
+      <span id="who" class="muted"></span>
+      <button id="connect">Connect wallet</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="deployBanner" class="banner warn" hidden>Contract not deployed yet — this page is a preview. Vouch data and transactions are disabled until the contract address is set in <code>config.js</code>.</div>
+    <div id="agentBanner" class="banner" hidden></div>
+    <div id="status" class="muted"></div>
+
+    <section>
+      <h2>Vouch for an agent</h2>
+      <p class="muted">Only Agent ID holders can vouch, and only for other Agent ID holders. One vouch per pair; you can withdraw yours at any time. No fees — you only pay network gas.</p>
+      <label for="target">Agent ID name or address</label>
+      <div class="row">
+        <input id="target" placeholder="alice.ai or 0x…" autocomplete="off" />
+        <button id="lookup" class="secondary" type="button">Open</button>
+      </div>
+      <div id="profile" hidden>
+        <h2 id="pName" class="mt"></h2>
+        <div class="muted" id="pAddr"></div>
+        <div class="stats">
+          <div class="stat"><b id="pIn">–</b><span class="muted">vouches received</span></div>
+          <div class="stat"><b id="pOut">–</b><span class="muted">vouches given</span></div>
+        </div>
+        <div id="pState" class="muted"></div>
+        <label for="note">Public note (optional, max 140 bytes, stored in the event log)</label>
+        <input id="note" maxlength="140" placeholder="Reliable agent, shipped on time" />
+        <div class="row mt">
+          <button id="vouchBtn">Vouch</button>
+          <button id="unvouchBtn" class="secondary" hidden>Withdraw my vouch</button>
+          <span></span>
+        </div>
+        <details class="mt">
+          <summary>Using a Binance Agentic Wallet (CLI)? Get the command instead</summary>
+          <p class="muted">This builds the calldata in your browser. Run the preview yourself, review it, then execute with the returned <code>requestId</code>. This page never sees your wallet credentials.</p>
+          <div class="row"><button class="secondary" id="cliVouch" type="button">Vouch command</button><button class="secondary" id="cliUnvouch" type="button">Withdraw command</button><span></span></div>
+          <pre id="cliOut" hidden></pre>
+        </details>
+      </div>
+    </section>
+
+    <section id="graph" hidden>
+      <h2 id="gTitle">Trust graph</h2>
+      <div class="edges">
+        <div><h3 class="muted">Vouched for by</h3><div id="gIn"></div></div>
+        <div><h3 class="muted">Vouches for</h3><div id="gOut"></div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <ul class="muted">
+        <li>The contract calls <code>balanceOf</code> on the Agent ID registry (<code>0x60B9…022F</code>) for both the voucher and the recipient on every vouch.</li>
+        <li>Names are resolved by the registry itself (<code>ownerOfHandle</code>), so <code>alice.ai</code> always means the address that holds that Agent ID.</li>
+        <li>Each vouch is an edge in a public graph: who vouches for whom is readable straight from the contract.</li>
+        <li>No admin keys: nobody but the voucher can add or remove their vouch. The source is verified on BscScan.</li>
+        <li>Share a link to your profile so others can vouch for you: <code>…/#yourname.ai</code></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Independent open-source project built for the Agent ID hackathon on BNB Chain. Not affiliated with or endorsed by Binance or SPACE ID. A vouch is a social signal, not a guarantee, and carries no financial value. This site never asks for seed phrases, private keys, or pairing codes — if anything does, it is not us. Every transaction is confirmed by you in your own wallet.</p>
+    <p id="links"></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js" integrity="sha384-6Zl0Pc8zjSz8KvmNeXRvUQgY4ryFb+BwDvKCmLYcBME0joAaru491tQgi9B7zsMM" crossorigin="anonymous"></script>
+  <script src="config.js"></script>
+  <script src="wallet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

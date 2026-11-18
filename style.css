@@ -1,0 +1,57 @@
+:root {
+  --bg: #0f1115; --panel: #171a21; --line: #262b36; --text: #e8eaf0; --muted: #9aa3b2;
+  --accent: #5b8cff; --accent2: #2fbf8f; --warn: #e5a33a; --bad: #e5534b;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.45; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+header h1 { font-size: 1.25rem; margin: 0; }
+header h1 span { color: var(--muted); font-weight: 400; font-size: .95rem; }
+main { max-width: 860px; margin: 0 auto; padding: 1.25rem; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+h2 { font-size: 1.05rem; margin: 0 0 .75rem; }
+button { background: var(--accent); color: #fff; border: 0; border-radius: 7px; padding: .5rem .9rem; font-size: .9rem; cursor: pointer; }
+button.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+input, select, textarea { background: #0c0e12; color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: .5rem .6rem; font-size: .92rem; width: 100%; }
+label { display: block; font-size: .85rem; color: var(--muted); margin: .6rem 0 .25rem; }
+.row { display: flex; gap: .5rem; align-items: center; }
+.row > * { flex: 1; }
+.row > button { flex: 0 0 auto; }
+.muted { color: var(--muted); font-size: .88rem; }
+.banner { border-radius: 8px; padding: .65rem .8rem; margin-bottom: 1rem; font-size: .9rem; }
+.banner.warn { background: #3a2c10; border: 1px solid #6b4f18; }
+.banner.ok { background: #10301f; border: 1px solid #1e5a3a; }
+.banner.bad { background: #3a1513; border: 1px solid #6b2421; }
+.pill { display: inline-block; font-size: .78rem; padding: .1rem .5rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.pill.open { color: var(--accent2); border-color: #1e5a3a; }
+.poll { border-top: 1px solid var(--line); padding: .9rem 0; }
+.poll:first-of-type { border-top: 0; }
+.poll h3 { margin: 0 0 .3rem; font-size: 1rem; word-break: break-word; }
+.opt { position: relative; border: 1px solid var(--line); border-radius: 7px; padding: .45rem .6rem; margin: .35rem 0; overflow: hidden; display: flex; justify-content: space-between; gap: .5rem; align-items: center; }
+.opt .bar { position: absolute; inset: 0 auto 0 0; background: rgba(91, 140, 255, .18); z-index: 0; }
+.opt.mine .bar { background: rgba(47, 191, 143, .25); }
+.opt > *:not(.bar) { position: relative; z-index: 1; }
+.opt .label { word-break: break-word; }
+.opt button { padding: .3rem .7rem; font-size: .82rem; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; }
+pre { background: #0c0e12; border: 1px solid var(--line); border-radius: 7px; padding: .6rem; white-space: pre-wrap; word-break: break-all; }
+details summary { cursor: pointer; color: var(--muted); font-size: .88rem; }
+footer { max-width: 860px; margin: 0 auto; padding: 0 1.25rem 2rem; color: var(--muted); font-size: .8rem; }
+a { color: var(--accent); }
+#status { min-height: 1.2em; }
+.fixed { flex: 0 0 auto; }
+.mt-s { margin-top: .4rem; }
+.mt { margin-top: .8rem; }
+.mb { margin-bottom: .5rem; }
+.m0 { margin: 0; }
+.stats { display: flex; gap: 1rem; flex-wrap: wrap; margin: .5rem 0; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: .5rem .8rem; min-width: 120px; }
+.stat b { display: block; font-size: 1.4rem; }
+.edges { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .edges { grid-template-columns: 1fr; } }
+.edge { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding: .3rem 0; border-bottom: 1px solid var(--line); }
+.edge button { padding: .2rem .55rem; font-size: .78rem; }
+.linklike { background: none; border: 0; color: var(--accent); padding: 0; cursor: pointer; font-size: .92rem; }
